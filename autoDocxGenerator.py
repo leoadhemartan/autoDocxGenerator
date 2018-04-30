@@ -17,7 +17,7 @@ wb = openpyxl.load_workbook('source.xlsx')
 ws = wb['Sheet1']
 myList = []
 listIndex=0
-for row in ws['A{}:E{}'.format(ws.min_row,ws.max_row)]:
+for row in ws[ws.min_row:ws.max_column]:
     myList.append([])    
     for cell in row:
        myList[listIndex].append(cell.value)
