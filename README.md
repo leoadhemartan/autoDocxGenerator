@@ -11,13 +11,18 @@ python-docx
 
 These can be installed via pip
 >pip install openpyxl
+
 >pip install python-docx
 
 **How to use:**
 Create a Word document named template.docx and create unique identifiers for texts to be replaced. The script follows whatever formatting the identifier texts have. In the accompanying example files, the template.docx contains the following identifiers:
+
 xFirstNameMiddleInitialx
+
 xLastNamex
+
 xPositionx
+
 xTitlex
 
 These identifiers have to be in the first row of the source.xlsx and they serve as headers. Once you've populated the source.xlsx file, just run the script inside the same folder where the source.xlsx or template.xlsx resides.
