@@ -1,41 +1,44 @@
 #! /usr/bin/python
 
 #Generate Word Documents from Word Templates and Excel Source File
-import openpyxl
-import os
-import sys 
-import docx
+import os, sys, getopt, docx, openpyxl
 
 def get_script_path(): #get current directory where script is located
     return os.path.dirname(os.path.realpath(sys.argv[0]))
 
 os.chdir(get_script_path())
 
-#Read source excel file
+if len(sys.argv) == 3 :
+    sourceFile=str(sys.argv[1])
+    templateFile =str(sys.argv[2])
+    print ('Source Filename     :'), sys.argv[1]
+    print ('Template Filename   :'), sys.argv[2]
 
-wb = openpyxl.load_workbook('source.xlsx')
+else:
+    print ('No Source and Template files Specified.')
+    sys.exit()
+
+#Read source excel file
+wb = openpyxl.load_workbook(sourceFile)
 ws = wb['Sheet1']
 myList = []
 listIndex=0
-for row in ws[ws.min_row:ws.max_column]:
+for row in ws[ws.min_row:ws.max_row]:
     myList.append([])    
     for cell in row:
        myList[listIndex].append(cell.value)
     listIndex += 1
-print(myList)
 print(myList[0])
 print('Source File successfully parsed')
 wb.close
 
 textToReplace = myList[0]
 for x in myList[1:]:      
-    wordDoc = docx.Document('template.docx')
+    wordDoc = docx.Document(templateFile)
     
     for p in wordDoc.paragraphs: 
-        rIndex = 0      
-        for tIndex in textToReplace:           
-            #print(tIndex)
-            #print(rIndex)
+        rIndex = 0   #this is the index that will handle all the columns in the current row   
+        for tIndex in textToReplace:   
             if tIndex in p.text:
                 replacementText =   str(x[rIndex]).strip()
                 print('found ' + tIndex)                
